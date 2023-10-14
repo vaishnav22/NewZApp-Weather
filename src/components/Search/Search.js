@@ -44,13 +44,13 @@ const Search = ({onLocationSelect}) => {
   return (
     <Stack sx={{ width: "100%"}}>
       <Autocomplete
+      freeSolo={true}
         disablePortal
         id="combo-box-demo"
         getOptionLabel={(locationResult) => `${locationResult.city}, ${locationResult.countryCode}`}
         options={locationResult}
-        sx={{ width: "100%" }}
+        sx={{ width: "100%" , borderRadius: "30"}}
         onInputChange={onChange}
-        noOptionsText="City not available"
         renderInput={(params) => <TextField {...params} label="Search for a city or airport" />}
         onChange={hadleSelect}
       />

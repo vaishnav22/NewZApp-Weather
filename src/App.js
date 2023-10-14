@@ -20,9 +20,6 @@ function App() {
     const lat = location.latitude
     const long = location.longitude
     const name = location.name
-    console.log(lat, long, name);
-
-    console.log(WEATHER_URL);
 
     const fetchWeather = fetch(`${WEATHER_URL}/weather?lat=${lat}&lon=${long}&appid=${WEATHER_API}&units=metric`)
     const fetchForcast = fetch(`${WEATHER_URL}/forecast?lat=${lat}&lon=${long}&appid=${WEATHER_API}&units=metric`)
@@ -33,8 +30,6 @@ function App() {
       const forcastResponse = await response[1].json()
       setWeather({city: name, ...currentWeather})
       setForcast({city: name, ...forcastResponse})
-      // console.log(currentWeather);
-      // console.log(forcastResponse);
       
     }).catch((error) => {
       console.log(error);
@@ -61,7 +56,7 @@ function App() {
       <Box
         sx={{boxShadow: 3, width: '80%', height: '100%', bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
           color: (theme) =>
-            theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800', p: 1, m: 1, borderRadius: 1, textAlign: 'center', fontSize: '0.875rem',fontWeight: '700', margin: "40px auto", backgroundImage: 'linear-gradient(180deg, rgb(18, 72, 107,0), rgb(18, 72, 107,1))'
+            theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800', p: 1, m: 1, borderRadius: 1, textAlign: 'center', fontSize: '0.875rem',fontWeight: '700', margin: "40px auto", backgroundImage: weather && forcast ? 'linear-gradient(180deg, rgb(18, 72, 107,0), rgb(18, 72, 107,1))' : 'none'
         }}
       >
         <Search onLocationSelect={handleLocationSelect}/>
@@ -74,7 +69,7 @@ function App() {
 
           <Grid xs={6}>
             <Item>
-              <DayForcast />
+              <DayForcast data={forcast}/>
             </Item>
           </Grid>
         </Grid>

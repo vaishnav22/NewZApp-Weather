@@ -5,25 +5,24 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/system/Unstable_Grid';
 import BasicCard from '../commonComponents/Card';
+import { getLocalTime } from '../utils'
 
 
 const CurrentWeather = ({data}) => {
-  console.log('from current weather data', data);
-
-  function formatTimestampToLocalTime(timestamp) {
-    const date = new Date(timestamp * 1000); // Convert to milliseconds
+  const weatherData = {
+      "humidity": `${data.main.humidity}%`,
+      "Wind (MPH)": data.wind.speed,
+      "Sunrise (am)": getLocalTime(data.sys.sunrise, data.timezone),
+      "Sunset (pm)": getLocalTime(data.sys.sunset, data.timezone)
+    }
   
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-  
-    return `${hours}:${minutes}`;
-  }
-  
-
   return (
     <div>
       <Card sx={{ borderRadius: 1, display: 'flex',flexDirection: 'row', width: '100%', color: '#fff', marginTop: '5px', backgroundColor: 'transparent'}}>
         <CardContent sx={{ flex: 1, padding: "30px 10px 30px 10px"}}>
+        <Typography variant="h6" component="div" sx={{ fontSize: '12'}} >
+            {getLocalTime(data.dt, data.timezone)}
+          </Typography>
           <Typography variant="h3" component="div" sx={{ fontSize: '15',fontWeight: 'bold' }} >
             {data.city}
           </Typography>
@@ -53,79 +52,25 @@ const CurrentWeather = ({data}) => {
 
       <div style={{margin: "10px auto"}}>
       <Grid container spacing={2}>
-
-        <Grid item xs={6}>
-          <Card sx={{ borderRadius: 1, display: 'flex', width: '100%', color: '#fff', marginTop: '0px', backgroundColor: 'transparent' }}>
-            <CardContent sx={{ margin: 0, display: 'flex', alignItems: 'center' }}>
-              <span>
-                <img src="icons/humidity.png" alt="Humidity Icon" style={{ width: '24px', marginRight: '10px', color: "white"}} />
-              </span>
-              <div>
-                <Typography sx={{ fontSize: "18", color: "#fff"}}>
-                  Humidity
-                </Typography>
-                <Typography variant="h3" sx={{ fontSize: "25", color: "#fff"}}>
-                  {data.main.humidity}%
-                </Typography>
-              </div>
-            </CardContent>
-          </Card>
-
-        </Grid>
-
-        <Grid item xs={6}>
-          <Card sx={{ borderRadius: 1, display: 'flex', width: '100%', color: '#fff', marginTop: '0px', backgroundColor: 'transparent' }}>
-            <CardContent sx={{ margin: 0, display: 'flex', alignItems: 'center' }}>
-              <span>
-                <img src="icons/wind.png" alt="Humidity Icon" style={{ width: '24px', marginRight: '10px', color: "white"}} />
-              </span>
-              <div>
-                <Typography sx={{ fontSize: "18", color: "#fff"}}>
-                {`Wind (MPH)`}
-                </Typography>
-                <Typography variant="h3" sx={{ fontSize: "25", color: "#fff"}}>
-                {data.wind.speed}
-                </Typography>
-              </div>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={6}>
-          <Card sx={{ borderRadius: 1, display: 'flex', width: '100%', color: '#fff', marginTop: '0px', backgroundColor: 'transparent' }}>
-            <CardContent sx={{ margin: 0, display: 'flex', alignItems: 'center' }}>
-              <span>
-                <img src="icons/sunrise.png" alt="Humidity Icon" style={{ width: '24px', marginRight: '10px', color: "white"}} />
-              </span>
-              <div>
-                <Typography sx={{ fontSize: "18", color: "#fff"}}>
-                {`Sunrise (am)`}
-                </Typography>
-                <Typography variant="h3" sx={{ fontSize: "25", color: "#fff"}}>
-                {formatTimestampToLocalTime(data.sys.sunrise)}
-                </Typography>
-              </div>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid item xs={6}>
-        <Card sx={{ borderRadius: 1, display: 'flex', width: '100%', color: '#fff', marginTop: '0px', backgroundColor: 'transparent' }}>
-            <CardContent sx={{ margin: 0, display: 'flex', alignItems: 'center' }}>
-              <span>
-                <img src="icons/sunset.png" alt="Humidity Icon" style={{ width: '24px', marginRight: '10px', color: "white"}} />
-              </span>
-              <div>
-                <Typography sx={{ fontSize: "18", color: "#fff"}}>
-                {`Sunset (pm)`}
-                </Typography>
-                <Typography variant="h3" sx={{ fontSize: "25", color: "#fff"}}>
-                {formatTimestampToLocalTime(data.sys.sunset)}
-                </Typography>
-              </div>
-            </CardContent>
-          </Card>
-        </Grid>
+        {Object.entries(weatherData).map(([label, value], index) => (
+          <Grid item xs={6} key={index}>
+            <Card sx={{ borderRadius: 1, display: 'flex', width: '100%', color: '#fff', marginTop: '0px', backgroundColor: 'transparent' }}>
+              <CardContent sx={{ margin: 0, display: 'flex', alignItems: 'center' }}>
+                <span>
+                  <img src={`icons/${label}.png`} alt={`${label} Icon`} style={{ width: '24px', marginRight: '10px', color: "white" }} />
+                </span>
+                <div>
+                  <Typography sx={{ fontSize: "18", color: "#fff" }}>
+                    {label}
+                  </Typography>
+                  <Typography variant="h3" sx={{ fontSize: "25", color: "#fff" }}>
+                    {value}
+                  </Typography>
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
       </Grid>
       </div>
 
