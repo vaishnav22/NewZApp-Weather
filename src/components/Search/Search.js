@@ -7,7 +7,7 @@ import {Box} from "@mui/system"
 
 import { GEO_URL, apiOptions } from '../api';
 
-const Search = () => {
+const Search = ({onLocationSelect}) => {
   const [location, setLoction] = useState(null);
   const [locationResult, setLocationResult] = useState([]);
 
@@ -15,7 +15,7 @@ const Search = () => {
     try {
       const response = await fetch(`${GEO_URL}?namePrefix=${value}`, apiOptions);
       const result = await response.json();
-      // console.log(result.data)
+      console.log(result.data)
       setLocationResult(Array.isArray(result.data) ? result.data : []);
     } catch (error) {
       console.error(error);
@@ -31,23 +31,24 @@ const Search = () => {
   }
 
   const hadleSelect = (event, selectedOption) => {
-    console.log(selectedOption);
-    // const locationData ={
-    //   latitude: selectedOption.latitude,
-    //   longitude: selectedOption.longitude,
-    //   name: 
-    // }
-    setLoction(selectedOption)
+    const locationData ={
+      latitude: selectedOption.latitude,
+      longitude: selectedOption.longitude,
+      name: selectedOption.name
+    }
+    // console.log(locationData);
+    onLocationSelect(locationData);
+    setLoction(locationData)
   }
 
   return (
-    <Stack sx={{ width: 500}}>
+    <Stack sx={{ width: "100%"}}>
       <Autocomplete
         disablePortal
         id="combo-box-demo"
         getOptionLabel={(locationResult) => `${locationResult.city}, ${locationResult.countryCode}`}
         options={locationResult}
-        sx={{ width: 500 }}
+        sx={{ width: "100%" }}
         onInputChange={onChange}
         noOptionsText="City not available"
         renderInput={(params) => <TextField {...params} label="Search for a city or airport" />}
