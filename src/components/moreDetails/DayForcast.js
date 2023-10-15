@@ -23,7 +23,7 @@ const DayForcast = ({data}) => {
   // console.log(newData);
 
   return (
-      <Box sx={{ flexGrow: 1, margin: "30px auto" }}>
+      <Box sx={{ flexGrow: 1, margin: "20px 20px 20px 10px" }}>
         <Typography sx={{ fontSize: "22", color: "black", fontWeight: "bold"}}>
           Hourly Forcast
         </Typography>

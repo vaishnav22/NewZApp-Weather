@@ -31,15 +31,20 @@ const Search = ({onLocationSelect}) => {
   }
 
   const hadleSelect = (event, selectedOption) => {
-    const locationData ={
-      latitude: selectedOption.latitude,
-      longitude: selectedOption.longitude,
-      name: selectedOption.name
+    if (selectedOption) {
+      const locationData = {
+        latitude: selectedOption.latitude,
+        longitude: selectedOption.longitude,
+        name: selectedOption.name,
+      };
+      onLocationSelect(locationData);
+      setLoction(locationData);
+    } else {
+      // Handle the case when selectedOption is not defined (e.g., display an error message or handle it as needed)
+      console.error('No location selected.');
     }
-    // console.log(locationData);
-    onLocationSelect(locationData);
-    setLoction(locationData)
   }
+  
 
   return (
     <Stack sx={{ width: "100%"}}>

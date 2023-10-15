@@ -79,7 +79,7 @@ const DaysForcast = ({data}) => {
             </Typography>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                {filteredData.map((item, index) => (
+                {filteredData.slice(1, filteredData.length).map((item, index) => (
                     <Tab icon={<TabIcon iconPath={item.weather[0].icon} />} label={forcastDays[index]} {...a11yProps(index)} key={index} />
                 ))}
                 </Tabs>
