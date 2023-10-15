@@ -32,6 +32,7 @@ const Search = ({onLocationSelect}) => {
 
   const hadleSelect = (event, selectedOption) => {
     if (selectedOption) {
+      
       const locationData = {
         latitude: selectedOption.latitude,
         longitude: selectedOption.longitude,

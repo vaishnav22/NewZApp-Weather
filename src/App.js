@@ -22,7 +22,7 @@ function App() {
 
   const [weather, setWeather] = useState(null);
   const [forcast, setForcast] = useState(null);
-  const [searchHistory, setSearchHistory] = useState(null)
+  const [searchHistory, setSearchHistory] = useState([])
   const [weatherData, setWeatherData] = useState({
     humidity: '',
     'Wind (MPH)': '',
@@ -34,7 +34,7 @@ function App() {
     const storedHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
     setSearchHistory(storedHistory);
   }, []);
-  console.log(searchHistory);
+
 
   const handleLocationSelect = (location) => {
     const lat = location.latitude;
@@ -51,6 +51,8 @@ function App() {
         setWeather({ city: name, ...currentWeather });
         setForcast({ city: name, ...forcastResponse });
 
+        // console.log('sdfsdfsdfsf', currentWeather);
+
         const newData = {
           'Humidity': `${currentWeather.main.humidity}%`,
           'Wind (MPH)': currentWeather.wind.speed,
@@ -65,7 +67,7 @@ function App() {
           tempMin: currentWeather.main.temp_min,
           tempMax: currentWeather.main.temp_max,
           currentTemp: currentWeather.main.temp,
-          location: currentWeather.name
+          location: name
         };
 
         // Get the existing history from local storage
@@ -145,20 +147,9 @@ function App() {
         </Grid>
         )}
       </Box>
-
-      <Box sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '20vh', // Use '100vh' to make the Box fill the entire viewport height
-        }}>
-        <Typography variant='h4' sx={{ margin: "20px auto" }}>
-          Search History
-        </Typography>
+      {searchHistory.length > 0 && (
         <SearchHistory />
-      </Box>
-      
+      )}
     </ThemeProvider>
   );
 }
