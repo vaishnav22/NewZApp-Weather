@@ -8,3 +8,16 @@ export function getLocalTime(timestamp, timezone) {
  
     return formattedTime;
   }
+
+export const formatReadableDate = (inputDate) =>
+  new Date(inputDate).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
+
+
+
