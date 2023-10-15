@@ -4,7 +4,7 @@ export function getLocalTime(timestamp, timezone) {
     const previousHour = temp === 0 ? 23 : temp - 1;
     const formattedTime = `${previousHour < 10 ? '0' : ''}${previousHour}:${date.getMinutes()}`;
 
-    console.log(formattedTime);
+    // console.log(formattedTime);
  
     return formattedTime;
   }

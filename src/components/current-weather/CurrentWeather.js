@@ -9,16 +9,9 @@ import { getLocalTime } from '../utils'
 
 
 const CurrentWeather = ({data}) => {
-  const weatherData = {
-      "humidity": `${data.main.humidity}%`,
-      "Wind (MPH)": data.wind.speed,
-      "Sunrise (am)": getLocalTime(data.sys.sunrise, data.timezone),
-      "Sunset (pm)": getLocalTime(data.sys.sunset, data.timezone)
-    }
-  
   return (
     <div>
-      <Card sx={{ borderRadius: 1, display: 'flex',flexDirection: 'row', width: '100%', color: '#fff', marginTop: '5px', backgroundColor: 'transparent'}}>
+      <Card sx={{ borderRadius: 1, display: 'flex',flexDirection: 'row', width: '100%', color: '#fff', marginTop: '5px', backgroundColor: 'rgba(0, 0, 0, 0.2)'}}>
         <CardContent sx={{ flex: 1, padding: "30px 10px 30px 10px"}}>
         <Typography variant="h6" component="div" sx={{ fontSize: '12'}} >
             {getLocalTime(data.dt, data.timezone)}
@@ -44,40 +37,12 @@ const CurrentWeather = ({data}) => {
         </CardContent>
 
         <CardMedia
-          sx={{ height: '60px', width: '60px', margin: "80px 60px 5px 0px" }}
+          sx={{ height: '100px', width: '100px', margin: "80px 60px 5px 0px" }}
           image={`/icons/${data.weather[0].icon}.png`}
           title="Sunny"
         />
       </Card>
-
-      <div style={{margin: "10px auto"}}>
-      <Grid container spacing={2}>
-        {Object.entries(weatherData).map(([label, value], index) => (
-          <Grid item xs={6} key={index}>
-            <Card sx={{ borderRadius: 1, display: 'flex', width: '100%', color: '#fff', marginTop: '0px', backgroundColor: 'transparent' }}>
-              <CardContent sx={{ margin: 0, display: 'flex', alignItems: 'center' }}>
-                <span>
-                  <img src={`icons/${label}.png`} alt={`${label} Icon`} style={{ width: '24px', marginRight: '10px', color: "white" }} />
-                </span>
-                <div>
-                  <Typography sx={{ fontSize: "18", color: "#fff" }}>
-                    {label}
-                  </Typography>
-                  <Typography variant="h3" sx={{ fontSize: "25", color: "#fff" }}>
-                    {value}
-                  </Typography>
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-      </div>
-
     </div>
-
-
-
   );
 }
 

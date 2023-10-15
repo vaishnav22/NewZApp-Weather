@@ -3,9 +3,12 @@ import {Typography, ThemeProvider, createTheme } from '@mui/material';
 import Search from './components/Search/Search';
 import DayForcast from './components/moreDetails/DayForcast';
 import CurrentWeather from './components/current-weather/CurrentWeather';
+import DaysForcast from './components/moreDetails/DaysForcast';
+import CityInfo from './components/current-weather/CityInfo';
 import Box from '@mui/material/Box';
 import Grid from '@mui/system/Unstable_Grid';
 import styled from '@mui/system/styled';
+import { getLocalTime } from './components/utils';
 
 import {WEATHER_URL, WEATHER_API} from './components/api'
 
@@ -13,6 +16,12 @@ function App() {
 
   const [weather, setWeather] = useState(null);
   const [forcast, setForcast] = useState(null)
+  const [weatherData, setWeatherData] = useState({
+    humidity: '',
+    'Wind (MPH)': '',
+    'Sunrise (am)': '',
+    'Sunset (pm)': '',
+  });
 
   // Callback function to set the geo location from search component
   const handleLocationSelect = (location) => {
@@ -31,11 +40,20 @@ function App() {
       setWeather({city: name, ...currentWeather})
       setForcast({city: name, ...forcastResponse})
       
+      const newData = {
+        'Humidity': `${currentWeather.main.humidity}%`,
+        'Wind (MPH)': currentWeather.wind.speed,
+        'Sunrise (am)': getLocalTime(currentWeather.sys.sunrise, currentWeather.timezone),
+        'Sunset (pm)': getLocalTime(currentWeather.sys.sunset, currentWeather.timezone),
+      };
+      setWeatherData(newData);
+
     }).catch((error) => {
       console.log(error);
     })
-}
+  }
 
+  
 
   const theme = createTheme({
     typography: {
@@ -53,6 +71,12 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: "30px", height: "0vh" }}>
+  <Typography variant='h4' sx={{ margin: "20px auto" }}>
+    Weather
+  </Typography>
+</Box>
+
       <Box
         sx={{boxShadow: 3, width: '80%', height: '100%', bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
           color: (theme) =>
@@ -70,6 +94,16 @@ function App() {
           <Grid xs={6}>
             <Item>
               <DayForcast data={forcast}/>
+            </Item>
+          </Grid>
+          <Grid xs={6}>
+            <Item>
+              <CityInfo data={weatherData}/>
+            </Item>
+          </Grid>
+          <Grid xs={6}>
+            <Item>
+              <DaysForcast data={forcast}/>
             </Item>
           </Grid>
         </Grid>

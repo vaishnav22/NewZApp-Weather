@@ -11,7 +11,7 @@ import Avatar from '@mui/material/Avatar';
  const BasicCard = ({data}) => {
   // console.log(data,'from the basic card');
   return (
-    <Card sx={{ borderRadius: 1, display: 'flex', width: '100%', color: '#fff', backgroundColor: 'transparent' }}>
+    <Card sx={{ borderRadius: 1, display: 'flex', width: '100%', color: '#fff', backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
       <CardContent sx={{margin: "auto"}}>
         <Typography sx={{ fontSize: "14", color: "#fff"}}>
           {data.time}

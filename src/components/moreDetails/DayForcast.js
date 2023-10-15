@@ -10,7 +10,7 @@ import {getLocalTime} from '../utils'
 
 const DayForcast = ({data}) => {
 
-  console.log(data, 'sclientd');
+  // console.log(data, 'sclientd');
 
   const newData = data.list.slice(0,5).map((item) => {
     return {
@@ -20,7 +20,7 @@ const DayForcast = ({data}) => {
     }
   })
 
-  console.log(newData);
+  // console.log(newData);
 
   return (
       <Box sx={{ flexGrow: 1, margin: "30px auto" }}>
