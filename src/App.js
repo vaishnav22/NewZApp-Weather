@@ -17,6 +17,8 @@ import SearchHistory from './components/searchHistory/SearchHistory';
 import { getLocalTime } from './components/utils';
 import { WEATHER_URL, WEATHER_API } from './components/api';
 
+
+
 function App() {
 
 
@@ -99,7 +101,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: "30px", height: "0vh" }}>
+      <Box sx={{minWidth: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: "30px", height: "0vh" }}>
         <Typography variant='h4' sx={{ margin: "20px auto" }}>
           Weather
         </Typography>
@@ -118,28 +120,29 @@ function App() {
           fontSize: '0.875rem',
           fontWeight: '700',
           margin: "40px auto",
+          minWidth: '400px',
           backgroundImage: weather && forcast ? 'linear-gradient(180deg, rgb(18, 72, 107,0), rgb(18, 72, 107,1))' : 'none',
         }}
-      >
+        >
         <Search onLocationSelect={handleLocationSelect} />
 
         {weather && forcast && ( <Grid container spacing={2} sx={{ margin: "15px auto", backgroundColor: "transparent" }}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6} sx={{ m: -2 }}>
             <Item>
               <CurrentWeather data={weather} />
             </Item>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <Item>
               <DayForcast data={forcast} />
             </Item>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6} sx={{ m: -2 }}>
             <Item>
               <CityInfo data={weatherData} />
             </Item>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <Item>
               <DaysForcast data={forcast} />
             </Item>
